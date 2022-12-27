@@ -5,5 +5,5 @@ COPY ./app .
 RUN wasm-pack build --target web
 
 
-FROM httpd:2.4
+FROM httpd:2.4 as web-server
 COPY --from=builder /usr/src/app /usr/local/apache2/htdocs/

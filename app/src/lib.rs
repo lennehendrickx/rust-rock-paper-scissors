@@ -95,7 +95,7 @@ fn get_random_rgb() -> String {
         g = rng.gen_range(0..256);
         b = rng.gen_range(0..256);
     }
-    format!("rgb({r},{g},{b})").to_string()
+    format!("rgb({r},{g},{b})")
 }
 //Imported JS function from index.html
 #[wasm_bindgen]
