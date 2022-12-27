@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8"/>
+    <title>hello-wasm example</title>
+</head>
+<body>
+<script type="module">
+    import init, {create_particles, render_particles} from './pkg/rust_rock_paper_scissors.js';
+
+    async function run() {
+        await init();
+        // From here on we use the functionality defined in wasm.
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        create_particles(canvas.width, canvas.height, 1000);
+
+        function loop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            render_particles();
+            requestAnimationFrame(loop);
+        }
+
+        loop();
+    }
+
+    run();
+</script>
+<canvas id="canvas"></canvas>
+<script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+
+    function draw_particle(x, y, color, size) {
+        ctx.fillStyle = color;
+        ctx.fillRect(x, y, size, size);
+    }
+</script>
+</body>
+</html>
