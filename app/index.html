@@ -6,22 +6,22 @@
 </head>
 <body>
 <script type="module">
-    import init, {create_particles, render_particles} from './pkg/rust_rock_paper_scissors.js';
+    import init, {game_init, game_update} from './pkg/rust_rock_paper_scissors.js';
 
     async function run() {
         await init();
         // From here on we use the functionality defined in wasm.
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        create_particles(canvas.width, canvas.height, 1000);
+        game_init(canvas.width, canvas.height);
 
-        function loop() {
+        function gameLoop(timestamp) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            render_particles();
-            requestAnimationFrame(loop);
+            game_update(timestamp);
+            requestAnimationFrame(timestamp => gameLoop(timestamp));
         }
 
-        loop();
+        requestAnimationFrame(timestamp => gameLoop(timestamp));
     }
 
     run();
