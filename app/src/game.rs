@@ -110,11 +110,11 @@ impl Game {
 pub struct Square {
     pub x: f64,
     pub y: f64,
-    vx: f64,
-    vy: f64,
     pub size: f64,
     pub color: String,
-    is_colliding: bool,
+    pub is_colliding: bool,
+    vx: f64,
+    vy: f64,
 }
 
 impl Square {

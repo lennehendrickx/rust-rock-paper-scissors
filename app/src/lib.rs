@@ -33,7 +33,7 @@ macro_rules! log {
 //Imported JS function from index.html
 #[wasm_bindgen]
 extern "C" {
-    fn draw_particle(x: f64, y: f64, s: &str, size: f64);
+    fn draw_particle(x: f64, y: f64, s: &str, size: f64, is_colliding: bool);
 }
 
 //Exported Rust functions used by index.html
@@ -46,5 +46,5 @@ pub fn game_init(width: f64, height: f64) {
 pub fn game_update(timestamp: f64) {
     GAME.lock().unwrap().update(timestamp);
     GAME.lock().unwrap().detect_collisions();
-    GAME.lock().unwrap().render(|square| draw_particle(square.x, square.y, &square.color, square.size));
+    GAME.lock().unwrap().render(|square| draw_particle(square.x, square.y, &square.color, square.size, square.is_colliding));
 }

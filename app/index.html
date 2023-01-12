@@ -31,8 +31,8 @@
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
 
-    function draw_particle(x, y, color, size) {
-        ctx.fillStyle = color;
+    function draw_particle(x, y, color, size, is_colliding) {
+        ctx.fillStyle = is_colliding ? 'red' : color;
         ctx.fillRect(x, y, size, size);
     }
 </script>
