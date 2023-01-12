@@ -3,7 +3,7 @@ mod game;
 
 use std::sync::Mutex;
 use wasm_bindgen::prelude::*;
-use crate::game::{Game, Square};
+use crate::game::Game;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
 // allocator.
@@ -16,7 +16,7 @@ extern crate lazy_static;
 
 //Global variable
 lazy_static! {
-    static ref GLOBAL_GAME: Mutex<Game> = {
+    static ref GAME: Mutex<Game> = {
         Mutex::new(Game::new())
     };
 }
@@ -39,11 +39,12 @@ extern "C" {
 //Exported Rust functions used by index.html
 #[wasm_bindgen]
 pub fn game_init(width: f64, height: f64) {
-    GLOBAL_GAME.lock().unwrap().init(width, height);
+    GAME.lock().unwrap().init(width, height);
 }
 
 #[wasm_bindgen]
 pub fn game_update(timestamp: f64) {
-    GLOBAL_GAME.lock().unwrap().update(timestamp);
-    GLOBAL_GAME.lock().unwrap().render(|square:&Square| draw_particle(square.x, square.y, &square.color, square.size));
+    GAME.lock().unwrap().update(timestamp);
+    GAME.lock().unwrap().detect_collisions();
+    GAME.lock().unwrap().render(|square| draw_particle(square.x, square.y, &square.color, square.size));
 }
